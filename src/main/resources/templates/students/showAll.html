@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <main class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h1>Students</h1>
+
+                <!-- Display each student's name and GPA in customized boxes -->
+                <div class="row row-cols-2 g-3">
+                    <div th:each="student : ${Us}" class="col">
+                        <div th:style="'border: 5px solid ' + ${#strings.replace(student.hairColour, '#', '')} + '; width: ' + (${student.weight} * 1.7) + 'px; height: ' + (${student.height}*1.7) + 'px;'" class="card">
+
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${student.name}"></h5>
+                                <p class="card-text" th:style="'font-size: ' + (10 + 3 * ${student.gpa}) + 'px'">
+                                    GPA: 
+                                    <span th:if="${student.gpa == 0}">
+                                        0, How does that even happen?
+                                    </span>
+                                    <span th:if="${student.gpa == 4}">
+                                        4, that's very impressive!
+                                    </span>
+                                    <span th:unless="${student.gpa == 0}" th:text="${student.gpa}"></span>
+                                </p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mt-4">
+                    <a th:href="@{/students/add}" class="btn btn-primary me-2">Add Student</a>
+                    <a th:href="@{/students/delete}" class="btn btn-primary me-2">Delete Student</a>
+                    <a th:href="@{/students/change}" class="btn btn-primary">Change Student</a>
+                </div>
+                
+            </div>
+        </div>
+    </main>
+</body>
+</html>
