@@ -5,13 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Students</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script >
+        function getRandomName() {
+            const names = [
+                "Alice", "Bob", "Charlie", "David", "Emma", "Frank", "Grace", "Henry", "Ivy", "Jack",
+                "Katherine", "Liam", "Mia", "Noah", "Olivia", "Peter", "Quinn", "Ruby", "Samuel", "Taylor"
+            ];
+
+            const randomIndex = Math.floor(Math.random() * names.length);
+            return names[randomIndex];
+        }
+
+        function generateRandomInputs() {
+            // Generate random values for each attribute
+            var randomName = getRandomName();
+            var randomWeight = Math.floor(Math.random() * 120) + 75; 
+            var randomHeight = Math.floor(Math.random() * 50) + 150; 
+            var randomGPA =Math.floor(Math.random() * 4.0)
+            var randomHairColour = getRandomColor(); 
+
+            // Update the input fields with random values
+            document.getElementById("name").value = randomName;
+            document.getElementById("weight").value = randomWeight;
+            document.getElementById("height").value = randomHeight;
+            document.getElementById("gpa").value = randomGPA;
+            document.getElementById("hairColour").value = randomHairColour;
+        }
+
+        function getRandomColor() {
+            var randomNumber = Math.floor(Math.random() * 4.0)
+
+            if(randomNumber == 0){
+                return "red";
+            } else if(randomNumber == 1){
+                return "black"
+            } else if(randomNumber == 2){
+                return "brown";
+            } else if(randomNumber == 3){
+                return "blue";  
+            } else{
+                return "#FAF0BE";
+            }
+        }
+
+        function validateForm() {
+            var name = document.getElementById("name").value;
+            var weight = document.getElementById("weight").value;
+            var height = document.getElementById("height").value;
+            var gpa = document.getElementById("gpa").value;
+            var hairColour = document.getElementById("hairColour").value;
+
+            if (name === "" || weight === "" || height === "" || gpa === "" || hairColour === "") {
+                alert("All fields must be filled out");
+                return false;
+            }
+
+            if (weight < 0 ) {
+                alert("Weight must be greater than 0");
+                return false;
+            }
+
+            if (height < 0 ) {
+                alert("Height must be greater than 0");
+                return false;
+            }
+
+            if (gpa < 0 || gpa > 4.33) {
+                alert("Max GPA is 4.33 and GPA must be greater than 0");
+                return false;
+            }
+
+
+            return true;
+        }
+    </script>
 </head>
 <body>
     <main class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <h1 class="text-center mt-5 mb-4">New User</h1>
-                <form action="/students/add" method="post" enctype="application/x-www-form-urlencoded">
+                <form onsubmit="return validateForm()" action="/students/add" method="post" enctype="application/x-www-form-urlencoded">
 
                     <div class="mb-3">
                         <input type="text" id="name" name="name" class="form-control form-control-lg" placeholder="Name">
@@ -31,7 +105,19 @@
                     <div class="d-grid gap-2">
                         <input class="btn btn-primary" type="submit" value="SEND">
                     </div>
+
+                    <div class="d-grid gap-2 mt-3">
+                        <button type="button" class="btn btn-secondary" onclick="generateRandomInputs()">Generate Random Student</button>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-3">
+                        <a th:href="@{/students/view}" class="btn btn-danger">Cancel</a>
+                    </div>
+
+                    
+                
                 </form>
+                
             </div>
         </div>
     </main>

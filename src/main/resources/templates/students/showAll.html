@@ -15,7 +15,9 @@
                 <!-- Display each student's name and GPA in customized boxes -->
                 <div class="row row-cols-2 g-3">
                     <div th:each="student : ${Us}" class="col">
-                        <div th:style="'border: 5px solid ' + ${#strings.replace(student.hairColour, '#', '')} + '; width: ' + (${student.weight} * 1.7) + 'px; height: ' + (${student.height}*1.7) + 'px;'" class="card">
+                        <div th:style="'border: 5px solid ' + 
+                            (${student.hairColour == 'blonde' ? '#FAF0BE' : #strings.replace(student.hairColour, '#', '')}) + 
+                            '; width: ' + (${student.weight} * 1.65) + 'px; height: ' + (${student.height} * 1.65) + 'px;'" class="card">
 
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${student.name}"></h5>
@@ -24,8 +26,8 @@
                                     <span th:if="${student.gpa == 0}">
                                         0, How does that even happen?
                                     </span>
-                                    <span th:if="${student.gpa == 4}">
-                                        4, that's very impressive!
+                                    <span th:if="${student.gpa > 4.33}">
+                                        4.33, that's very impressive!
                                     </span>
                                     <span th:unless="${student.gpa == 0}" th:text="${student.gpa}"></span>
                                 </p>
